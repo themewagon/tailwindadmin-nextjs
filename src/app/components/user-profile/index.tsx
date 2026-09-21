@@ -97,7 +97,7 @@ const UserProfile = () => {
           <div className='flex flex-col sm:flex-row items-center gap-6 rounded-xl relative w-full break-words'>
             <div>
               <Image
-                src={'/images/profile/user-1.jpg'}
+                src={'/tailwindadmin-nextjs/images/profile/user-1.jpg'}
                 alt='image'
                 width={80}
                 height={80}

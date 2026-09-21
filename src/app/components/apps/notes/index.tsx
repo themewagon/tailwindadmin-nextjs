@@ -5,8 +5,8 @@ import CardBox from '@/app/components/shared/CardBox'
 import NotesSidebar from '@/app/components/apps/notes/NotesSidebar'
 import NoteContent from '@/app/components/apps/notes/NoteContent'
 import { Icon } from '@iconify/react'
-import { usePathname } from 'next/navigation'
 import { NotesType } from '@/app/(DashboardLayout)/types/apps/notes'
+import { getStoredNotes, saveNotes } from '@/app/data/client-storage'
 import AddNotes from './AddNotes'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
@@ -22,30 +22,8 @@ const NotesApp = () => {
   const [notes, setNotes] = useState<NotesType[]>([])
   const [loading, setLoading] = useState(false)
   const [selectedNoteId, setSelectedNoteId] = useState<number | null>(null)
-  const location = usePathname()
 
   const handleClose = () => setIsOpen(false)
-
-  const fetchNotes = async () => {
-    try {
-      setLoading(true)
-      const response = await fetch('/api/notes')
-      const data = await response.json()
-      setNotes(data?.data || [])
-    } catch (err) {
-      console.error('Failed to fetch notes:', err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleResetNotes = async () => {
-    await fetch('/api/notes', {
-      method: 'GET',
-      headers: { browserRefreshed: 'true' },
-    })
-    fetchNotes()
-  }
 
   const colorVariation: ColorType[] = [
     { id: 1, lineColor: 'warning', disp: 'warning' },
@@ -56,33 +34,19 @@ const NotesApp = () => {
   ]
 
   useEffect(() => {
-    const isPageRefreshed = sessionStorage.getItem('isPageRefreshed')
-    if (isPageRefreshed === 'true') {
-      sessionStorage.removeItem('isPageRefreshed')
-      handleResetNotes()
-    } else {
-      fetchNotes()
-    }
-  }, [location])
-
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      sessionStorage.setItem('isPageRefreshed', 'true')
-    }
-    window.addEventListener('beforeunload', handleBeforeUnload)
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+    setLoading(true)
+    setNotes(getStoredNotes())
+    setLoading(false)
   }, [])
 
   const updateNote = (id: number, title: string, color: string) => {
-    setNotes(prev =>
-      prev.map(note => (note.id === id ? { ...note, title, color } : note))
-    )
-
-    fetch(`/api/notes/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, color }),
-    }).catch(err => console.error('Failed to update note:', err))
+    setNotes((prev) => {
+      const updated = prev.map((note) =>
+        note.id === id ? { ...note, title, color } : note
+      )
+      saveNotes(updated)
+      return updated
+    })
   }
 
   useEffect(() => {
@@ -91,20 +55,28 @@ const NotesApp = () => {
     }
   }, [notes, selectedNoteId])
 
-  const addNote = async (note: { title: string; color: string }) => {
-    try {
-      const response = await fetch('/api/notes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(note),
-      })
-      const result = await response.json()
-      const newNote: NotesType = result.data
-      setNotes(prev => [...prev, newNote])
-      setSelectedNoteId(newNote.id)
-    } catch (err) {
-      console.error('Failed to add note:', err)
+  const addNote = (note: { title: string; color: string }) => {
+    const newNote: NotesType = {
+      ...note,
+      id: Math.max(0, ...notes.map((item) => item.id)) + 1,
+      datef: new Date().toISOString(),
+      deleted: false,
     }
+    setNotes((prev) => {
+      const updated = [...prev, newNote]
+      saveNotes(updated)
+      return updated
+    })
+    setSelectedNoteId(newNote.id)
+  }
+
+  const deleteNote = (id: number) => {
+    setNotes((prev) => {
+      const updated = prev.filter((note) => note.id !== id)
+      saveNotes(updated)
+      return updated
+    })
+    if (selectedNoteId === id) setSelectedNoteId(null)
   }
 
   return (
@@ -121,10 +93,7 @@ const NotesApp = () => {
                 notes={notes}
                 loading={loading}
                 onSelectNote={(id: number) => setSelectedNoteId(id)}
-                onDeleteNote={(id: number) => {
-                  setNotes(prev => prev.filter(n => n.id !== id))
-                  if (selectedNoteId === id) setSelectedNoteId(null)
-                }}
+                onDeleteNote={deleteNote}
               />
             </SheetContent>
           </Sheet>
@@ -133,10 +102,7 @@ const NotesApp = () => {
               notes={notes}
               loading={loading}
               onSelectNote={(id: number) => setSelectedNoteId(id)}
-              onDeleteNote={(id: number) => {
-                setNotes(prev => prev.filter(n => n.id !== id))
-                if (selectedNoteId === id) setSelectedNoteId(null)
-              }}
+              onDeleteNote={deleteNote}
             />
           </div>
         </div>

@@ -1,11 +1,10 @@
-const CACHE_NAME = 'tailwind-admin-cache-v1';
+const CACHE_NAME = 'tailwind-admin-cache-v2';
+const BASE_PATH = '/tailwindadmin-nextjs';
 const urlsToCache = [
-  '/',
-  '/auth/login',
-  '/dashboard',
-  '/_next/static/',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
+  `${BASE_PATH}/`,
+  `${BASE_PATH}/auth/login/`,
+  `${BASE_PATH}/icons/icon-192.png`,
+  `${BASE_PATH}/icons/icon-512.png`,
 ];
 
 // Install SW

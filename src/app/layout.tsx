@@ -1,15 +1,8 @@
 import React from 'react'
 import type { Metadata } from 'next'
-import { DM_Sans } from 'next/font/google'
 import './css/globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import ServiceWorkerRegister from '@/app/components/service-worker/ServiceWorkerRegister'
-
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-dm-sans',
-})
 
 export const metadata: Metadata = {
   title: 'TailwindAdmin - Nextjs',
@@ -24,11 +17,15 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
-        <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
-        <link rel="manifest" href="/manifest.json" />
+        <link
+          rel='icon'
+          href='/tailwindadmin-nextjs/favicon.svg'
+          type='image/svg+xml'
+        />
+        <link rel='manifest' href='/tailwindadmin-nextjs/manifest.json' />
         <meta name="theme-color" content="#5d87ff" />
       </head>
-      <body className={`${dmSans.className}`}>
+      <body>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'

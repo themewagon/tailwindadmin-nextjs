@@ -2,7 +2,7 @@ export const EmployeesData = [
   {
     "name": {
       "text": "Alice Johnson",
-      "image": "/images/profile/user-1.jpg"
+      "image": "/tailwindadmin-nextjs/images/profile/user-1.jpg"
     },
     "position": "Senior Software Engineer",
     "salary": 120000,
@@ -13,7 +13,7 @@ export const EmployeesData = [
   {
     "name": {
       "text": "Bob Williams",
-      "image": "/images/profile/user-2.jpg"
+      "image": "/tailwindadmin-nextjs/images/profile/user-2.jpg"
     },
     "position": "Marketing Manager",
     "salary": 95000,
@@ -24,7 +24,7 @@ export const EmployeesData = [
   {
     "name": {
       "text": "Carol Davis",
-      "image": "/images/profile/user-3.jpg"
+      "image": "/tailwindadmin-nextjs/images/profile/user-3.jpg"
     },
     "position": "HR Specialist",
     "salary": 70000,
@@ -36,7 +36,7 @@ export const EmployeesData = [
   {
     "name": {
       "text": "David Brown",
-      "image": "/images/profile/user-4.jpg"
+      "image": "/tailwindadmin-nextjs/images/profile/user-4.jpg"
     },
     "position": "Product Owner",
     "salary": 110000,
@@ -47,7 +47,7 @@ export const EmployeesData = [
   {
     "name": {
       "text": "Eve Green",
-      "image": "/images/profile/user-5.jpg"
+      "image": "/tailwindadmin-nextjs/images/profile/user-5.jpg"
     },
     "position": "Junior Software Engineer",
     "salary": 80000,
@@ -58,7 +58,7 @@ export const EmployeesData = [
   {
     "name": {
       "text": "Frank White",
-      "image": "/images/profile/user-6.jpg"
+      "image": "/tailwindadmin-nextjs/images/profile/user-6.jpg"
     },
     "position": "Sales Representative",
     "salary": 65000,
@@ -69,7 +69,7 @@ export const EmployeesData = [
   {
     "name": {
       "text": "Grace Black",
-      "image": "/images/profile/user-7.jpg"
+      "image": "/tailwindadmin-nextjs/images/profile/user-7.jpg"
     },
     "position": "Financial Analyst",
     "salary": 88000,
@@ -80,7 +80,7 @@ export const EmployeesData = [
   {
     "name": {
       "text": "Henry King",
-      "image": "/images/profile/user-8.jpg"
+      "image": "/tailwindadmin-nextjs/images/profile/user-8.jpg"
     },
     "position": "CEO",
     "salary": 250000,
@@ -91,7 +91,7 @@ export const EmployeesData = [
   {
     "name": {
       "text": "Ivy Lee",
-      "image": "/images/profile/user-9.jpg"
+      "image": "/tailwindadmin-nextjs/images/profile/user-9.jpg"
     },
     "position": "Data Scientist",
     "salary": 130000,
@@ -102,7 +102,7 @@ export const EmployeesData = [
   {
     "name": {
       "text": "Jack Miller",
-      "image": "/images/profile/user-10.jpg"
+      "image": "/tailwindadmin-nextjs/images/profile/user-10.jpg"
     },
     "position": "Customer Support Specialist",
     "salary": 55000,

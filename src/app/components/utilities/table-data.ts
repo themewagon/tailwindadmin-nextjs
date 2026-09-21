@@ -1,7 +1,7 @@
 const PerformersData = [
     {
         key: "performerData1",
-        profileImg: "/images/profile/user-3.jpg",
+        profileImg: "/tailwindadmin-nextjs/images/profile/user-3.jpg",
         username: "Sunil Joshi",
         designation: "Web Designer",
         project: "Elite Admin",
@@ -12,7 +12,7 @@ const PerformersData = [
     },
     {
         key: "performerData2",
-        profileImg: "/images/profile/user-5.jpg",
+        profileImg: "/tailwindadmin-nextjs/images/profile/user-5.jpg",
         username: "John Deo",
         designation: "Web Developer",
         project: "Flexy Admin",
@@ -23,7 +23,7 @@ const PerformersData = [
     },
     {
         key: "performerData3",
-        profileImg: "/images/profile/user-6.jpg",
+        profileImg: "/tailwindadmin-nextjs/images/profile/user-6.jpg",
         username: "Nirav Joshi",
         designation: "Web Manager",
         project: "Material Pro",
@@ -33,7 +33,7 @@ const PerformersData = [
     },
     {
         key: "performerData4",
-        profileImg: "/images/profile/user-7.jpg",
+        profileImg: "/tailwindadmin-nextjs/images/profile/user-7.jpg",
         username: "Yuvraj Sheth",
         designation: "Project Manager",
         project: "Xtreme Admin",
@@ -44,7 +44,7 @@ const PerformersData = [
     },
     {
         key: "performerData5",
-        profileImg: "/images/profile/user-8.jpg",
+        profileImg: "/tailwindadmin-nextjs/images/profile/user-8.jpg",
         username: "Micheal Doe",
         designation: "Content Writer",
         project: "Helping Hands WP Theme",

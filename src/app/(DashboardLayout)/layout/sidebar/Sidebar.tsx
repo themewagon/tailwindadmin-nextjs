@@ -153,7 +153,7 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
               </div>
               <div className='lg:w-1/2 w-full -mt-4 ml-[26px] scale-[1.2] shrink-0'>
                 <Image
-                  src={'/images/backgrounds/rocket.png'}
+                  src={'/tailwindadmin-nextjs/images/backgrounds/rocket.png'}
                   alt='rocket'
                   width={100}
                   height={100}

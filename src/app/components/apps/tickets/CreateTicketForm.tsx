@@ -15,12 +15,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ChevronDown } from "lucide-react";
+import { getStoredTickets, saveTickets } from "@/app/data/client-storage";
 
 const agents = [
-  { id: 1, name: "Liam", photo: "/images/profile/user-10.jpg" },
-  { id: 2, name: "Steve", photo: "/images/profile/user-2.jpg" },
-  { id: 3, name: "Jack", photo: "/images/profile/user-3.jpg" },
-  { id: 4, name: "John", photo: "/images/profile/user-8.jpg" },
+  { id: 1, name: "Liam", photo: "/tailwindadmin-nextjs/images/profile/user-10.jpg" },
+  { id: 2, name: "Steve", photo: "/tailwindadmin-nextjs/images/profile/user-2.jpg" },
+  { id: 3, name: "Jack", photo: "/tailwindadmin-nextjs/images/profile/user-3.jpg" },
+  { id: 4, name: "John", photo: "/tailwindadmin-nextjs/images/profile/user-8.jpg" },
 ];
 
 const CreateTicketForm = () => {
@@ -36,28 +37,17 @@ const CreateTicketForm = () => {
 
   const router = useRouter();
 
-  // Fetch tickets to calculate new ID
   useEffect(() => {
-    const fetchTickets = async () => {
-      const res = await fetch("/api/ticket", {
-        method: "GET",
-        headers: { browserrefreshed: "false" },
-      });
-      const data = await res.json();
-      if (data?.data) {
-        setTickets(data.data);
-        const maxId = data.data.reduce(
-          (max: number, ticket: TicketType) => (ticket.Id > max ? ticket.Id : max),
-          0
-        );
-        setTicketId(maxId + 1);
-      }
-    };
-    fetchTickets();
+    const storedTickets = getStoredTickets();
+    setTickets(storedTickets);
+    const maxId = storedTickets.reduce(
+      (max, ticket) => (ticket.Id > max ? ticket.Id : max),
+      0
+    );
+    setTicketId(maxId + 1);
   }, []);
 
-  // Submit new ticket to API
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!ticketTitle || !ticketDescription) {
       alert("Please fill out all fields.");
       return;
@@ -75,18 +65,9 @@ const CreateTicketForm = () => {
       deleted: false,
     };
 
-    try {
-      await fetch("/api/ticket", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newTicket),
-      });
-
-      resetForm();
-      router.push("/apps/tickets");
-    } catch (error) {
-      console.error("Failed to create ticket", error);
-    }
+    saveTickets([...tickets, newTicket]);
+    resetForm();
+    router.push("/apps/tickets");
   };
 
   const resetForm = () => {

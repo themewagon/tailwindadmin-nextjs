@@ -4,6 +4,7 @@ import CardBox from "@/app/components/shared/CardBox";
 import TicketFilter from "@/app/components/apps/tickets/TicketFilter";
 import TicketListing from "@/app/components/apps/tickets/TicketListing";
 import { TicketType } from "@/app/(DashboardLayout)/types/ticket";
+import { getStoredTickets, saveTickets } from "@/app/data/client-storage";
 
 const TicketsApp = () => {
   const [tickets, setTickets] = useState<TicketType[]>([]);
@@ -11,32 +12,15 @@ const TicketsApp = () => {
   const [ticketSearch, setTicketSearch] = useState<string>("");
 
   useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const res = await fetch("/api/ticket", {
-          headers: {
-            browserrefreshed: "false",
-          },
-        });
-        const json = await res.json();
-        setTickets(json.data);
-      } catch (err) {
-        console.error("Error fetching tickets:", err);
-      }
-    };
-    fetchTickets();
+    setTickets(getStoredTickets());
   }, []);
 
-  const deleteTicket = async (id: number) => {
-    try {
-      await fetch("/api/ticket", {
-        method: "DELETE",
-        body: JSON.stringify({ id }),
-      });
-      setTickets((prev) => prev.filter((t) => t.Id !== id));
-    } catch (err) {
-      console.error("Error deleting ticket:", err);
-    }
+  const deleteTicket = (id: number) => {
+    setTickets((prev) => {
+      const updated = prev.filter((ticket) => ticket.Id !== id);
+      saveTickets(updated);
+      return updated;
+    });
   };
 
   const searchTickets = (text: string) => {
